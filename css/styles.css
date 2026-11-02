@@ -1,0 +1,217 @@
+/* ==========================================================================
+   OS PELINHAS MTB & ROAD - HOJA DE ESTILOS PERSONALIZADA
+   Colores: Negro Grafito (#0F1115), Amarillo Eléctrico (#FFE500), Acentos
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --pelina-yellow: #FFE500;
+  --pelina-yellow-hover: #F0D500;
+  --pelina-yellow-glow: rgba(255, 229, 0, 0.35);
+  --pelina-dark: #0d0f14;
+  --pelina-card: #151821;
+  --pelina-card-border: #232836;
+  --pelina-text-muted: #94a3b8;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--pelina-dark);
+  color: #f8fafc;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* Tipografía de competición / club */
+.font-racing {
+  font-family: 'Chakra Petch', 'Impact', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Efecto Resplandor Amarillo */
+.glow-yellow {
+  box-shadow: 0 0 25px rgba(255, 229, 0, 0.25);
+}
+
+.glow-yellow-sm {
+  box-shadow: 0 0 12px rgba(255, 229, 0, 0.2);
+}
+
+.glow-yellow-text {
+  text-shadow: 0 0 15px rgba(255, 229, 0, 0.4);
+}
+
+/* Pulso para el semáforo de dificultad */
+@keyframes pulse-dot {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 0.7;
+  }
+}
+
+.pulse-badge {
+  animation: pulse-dot 2s infinite ease-in-out;
+}
+
+/* Cartel con zoom suave y aspecto profesional */
+.poster-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1rem;
+  background: #090a0d;
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.8), 0 0 0 1px var(--pelina-card-border);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.poster-container:hover {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9), 0 0 30px rgba(255, 229, 0, 0.2);
+}
+
+.poster-image {
+  width: 100%;
+  height: auto;
+  max-height: 640px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+  transition: transform 0.4s ease;
+}
+
+/* Tarjetas de estadísticas de ruta */
+.stat-card {
+  background: linear-gradient(145deg, #181c27, #11141c);
+  border: 1px solid var(--pelina-card-border);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  transition: all 0.25s ease;
+}
+
+.stat-card:hover {
+  border-color: #384259;
+  transform: translateY(-2px);
+}
+
+/* Botón principal de inscripción */
+.btn-apuntate {
+  background: linear-gradient(135deg, #FFE500 0%, #FFCC00 100%);
+  color: #0d0f14;
+  font-family: 'Chakra Petch', sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 10px 25px -5px rgba(255, 229, 0, 0.4);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-apuntate:hover:not(:disabled) {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 15px 35px -5px rgba(255, 229, 0, 0.55);
+}
+
+.btn-apuntate:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.btn-apuntate:disabled {
+  background: #334155;
+  color: #94a3b8;
+  box-shadow: none;
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+/* Tacómetro / Barra de Plazas */
+.meter-container {
+  background-color: #1e2433;
+  border-radius: 9999px;
+  overflow: hidden;
+  height: 14px;
+  position: relative;
+}
+
+.meter-fill {
+  height: 100%;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.6s ease;
+}
+
+/* Transiciones del modal */
+.modal-backdrop {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  background: rgba(8, 10, 15, 0.85);
+}
+
+.modal-content {
+  max-height: 90vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #374151 #1f2937;
+}
+
+.modal-content::-webkit-scrollbar {
+  width: 6px;
+}
+.modal-content::-webkit-scrollbar-track {
+  background: #1f2937;
+}
+.modal-content::-webkit-scrollbar-thumb {
+  background-color: #4b5563;
+  border-radius: 3px;
+}
+
+/* Estilos de impresión para el listado de inscritos */
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  .no-print, header, footer, #public-view, #modal-registro, #admin-tabs-nav, .admin-controls {
+    display: none !important;
+  }
+
+  #admin-view, #tab-inscritos {
+    display: block !important;
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .print-only-header {
+    display: block !important;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #000;
+    padding-bottom: 10px;
+  }
+
+  table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    color: #000 !important;
+  }
+
+  th, td {
+    border: 1px solid #333 !important;
+    padding: 6px 8px !important;
+    font-size: 11pt !important;
+    color: #000 !important;
+    background: transparent !important;
+  }
+
+  th {
+    background-color: #eee !important;
+    font-weight: bold !important;
+  }
+
+  .badge-print {
+    border: 1px solid #999;
+    padding: 2px 4px;
+    font-size: 9pt;
+  }
+}
