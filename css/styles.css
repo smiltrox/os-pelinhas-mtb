@@ -76,20 +76,33 @@ body {
 .poster-image {
   width: 100%;
   height: auto;
-  max-height: 640px;
+  max-height: 220px; /* Tamaño optimizado para pantalla de teléfono móvil */
   object-fit: contain;
   display: block;
   margin: 0 auto;
   transition: transform 0.4s ease;
 }
 
-/* Tarjetas de estadísticas de ruta */
+@media (min-width: 640px) {
+  .poster-image {
+    max-height: 560px; /* Tamaño completo para ordenador y tablets */
+  }
+}
+
+/* Tarjetas de estadísticas de ruta compactas y móviles */
 .stat-card {
   background: linear-gradient(145deg, #181c27, #11141c);
   border: 1px solid var(--pelina-card-border);
-  border-radius: 0.75rem;
-  padding: 1rem;
+  border-radius: 0.625rem;
+  padding: 0.625rem;
   transition: all 0.25s ease;
+}
+
+@media (min-width: 640px) {
+  .stat-card {
+    border-radius: 0.75rem;
+    padding: 1rem;
+  }
 }
 
 .stat-card:hover {
