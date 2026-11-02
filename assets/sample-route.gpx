@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx creator="Os Pelinhas MTB Olivenza" version="1.1" xmlns="http://www.topografix.com/GPX/1/1">
+  <metadata>
+    <name>Quedada Os Pelinhas MTB - Sierra de Alor</name>
+    <desc>Ruta oficial de quedada de Os Pelinhas MTB Olivenza</desc>
+    <author>
+      <name>Club Ciclista Os Pelinhas MTB</name>
+      <email id="soportepelinhas" domain="gmail.com"/>
+    </author>
+  </metadata>
+  <trk>
+    <name>Ruta Sierra de Alor - 20 Aniversario</name>
+    <type>Cycling</type>
+    <trkseg>
+      <trkpt lat="38.6833" lon="-7.1000"><ele>270</ele><time>2026-11-15T08:30:00Z</time></trkpt>
+      <trkpt lat="38.6750" lon="-7.0920"><ele>295</ele><time>2026-11-15T08:45:00Z</time></trkpt>
+      <trkpt lat="38.6610" lon="-7.0810"><ele>340</ele><time>2026-11-15T09:10:00Z</time></trkpt>
+      <trkpt lat="38.6480" lon="-7.0650"><ele>420</ele><time>2026-11-15T09:35:00Z</time></trkpt>
+      <trkpt lat="38.6320" lon="-7.0500"><ele>580</ele><time>2026-11-15T10:15:00Z</time></trkpt>
+      <trkpt lat="38.6310" lon="-7.0490"><ele>610</ele><time>2026-11-15T10:30:00Z</time></trkpt>
+      <trkpt lat="38.6400" lon="-7.0700"><ele>490</ele><time>2026-11-15T11:00:00Z</time></trkpt>
+      <trkpt lat="38.6650" lon="-7.0880"><ele>320</ele><time>2026-11-15T11:30:00Z</time></trkpt>
+      <trkpt lat="38.6833" lon="-7.1000"><ele>270</ele><time>2026-11-15T12:00:00Z</time></trkpt>
+    </trkseg>
+  </trk>
+</gpx>
