@@ -79,17 +79,17 @@
   </header>
 
   <!-- =========================================================================
-       VISTA PÚBLICA / INVITADOS (SECCIÓN PRINCIPAL)
+       VISTA PÚBLICA / INVITADOS (SECCIÓN PRINCIPAL - OPTIMIZADA MÓVIL)
        ========================================================================= -->
-  <main id="public-view" class="flex-grow py-6 sm:py-10 px-4 sm:px-6">
+  <main id="public-view" class="flex-grow py-2 sm:py-8 px-2 sm:px-6">
     <div class="max-w-4xl mx-auto">
 
       <!-- =======================================================================
            1. NOMBRE DE LA QUEDADA (OBLIGATORIAMENTE ENCIMA DEL CARTEL Y BIEN VISIBLE)
            ======================================================================= -->
-      <div class="text-center mb-6">
+      <div class="text-center mb-1.5 sm:mb-4">
         <!-- Badges de Modalidad y Semáforo de Dificultad -->
-        <div class="flex flex-wrap items-center justify-center gap-2.5 mb-3">
+        <div class="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2.5 mb-1 sm:mb-2">
           <!-- Badge MTB o Carretera -->
           <div id="public-modalidad-badge"></div>
 
@@ -99,17 +99,17 @@
 
         <!-- Título Principal de la Quedada (Grande y Visible) -->
         <h1 id="public-quedada-nombre" 
-            class="font-racing text-2xl sm:text-4xl md:text-5xl font-black text-white tracking-wide uppercase leading-tight drop-shadow-md">
+            class="font-racing text-lg sm:text-3xl md:text-4xl font-black text-white tracking-wide uppercase leading-tight drop-shadow-md">
           CARGANDO QUEDADA...
         </h1>
         
-        <div class="h-1 w-24 bg-yellow-400 mx-auto mt-3 rounded-full glow-yellow-sm"></div>
+        <div class="h-0.5 sm:h-1 w-16 sm:w-24 bg-yellow-400 mx-auto mt-1 sm:mt-2 rounded-full glow-yellow-sm"></div>
       </div>
 
       <!-- =======================================================================
            2. CARTEL DE LA QUEDADA (ELEMENTO MÁS VISIBLE DE LA APLICACIÓN)
            ======================================================================= -->
-      <div class="poster-container mb-8 max-w-2xl mx-auto border-2 border-yellow-400/40">
+      <div class="poster-container mb-2 sm:mb-4 max-w-xl mx-auto border sm:border-2 border-yellow-400/40">
         <img id="public-cartel-img" 
              src="assets/cartel-sample.svg" 
              alt="Cartel Oficial de la Quedada Ciclista" 
@@ -117,72 +117,70 @@
       </div>
 
       <!-- =======================================================================
-           3. FICHA TÉCNICA Y DATOS CLAVE DE LA RUTA
+           3. FICHA TÉCNICA Y DATOS CLAVE DE LA RUTA (COMPACTA Y ADAPTADA A MÓVIL)
            ======================================================================= -->
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-6">
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 sm:gap-3 mb-2 sm:mb-4">
         
         <!-- Fecha / Día -->
-        <div class="stat-card col-span-2 sm:col-span-2 flex items-start gap-3">
-          <div class="p-2.5 rounded-lg bg-yellow-400/10 text-yellow-400 flex-shrink-0">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="stat-card col-span-1 sm:col-span-2 flex items-center gap-2 py-1.5 sm:py-2.5 px-2 sm:px-3">
+          <div class="p-1 sm:p-2 rounded bg-yellow-400/10 text-yellow-400 flex-shrink-0">
+            <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
             </svg>
           </div>
-          <div>
-            <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider">Día y Hora</p>
-            <p id="public-dia" class="text-sm sm:text-base font-bold text-white mt-0.5 leading-snug">-</p>
+          <div class="min-w-0">
+            <p class="text-[9px] sm:text-xs text-gray-400 font-semibold uppercase tracking-wider">Fecha</p>
+            <p id="public-dia" class="text-xs sm:text-sm font-bold text-white truncate leading-tight">-</p>
           </div>
         </div>
 
         <!-- Lugar de Salida -->
-        <div class="stat-card col-span-2 sm:col-span-2 flex items-start gap-3">
-          <div class="p-2.5 rounded-lg bg-yellow-400/10 text-yellow-400 flex-shrink-0">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-            </svg>
-          </div>
-          <div class="flex-grow">
-            <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider">Lugar de Salida</p>
-            <p id="public-lugar" class="text-sm sm:text-base font-bold text-white mt-0.5 leading-snug">-</p>
-            <a id="public-maps-link" href="#" target="_blank" rel="noopener noreferrer" 
-               class="inline-flex items-center gap-1 text-xs font-semibold text-yellow-400 hover:text-yellow-300 hover:underline mt-1.5">
-              <span>Ver en Google Maps</span>
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+        <div class="stat-card col-span-1 sm:col-span-2 flex items-center justify-between gap-1 py-1.5 sm:py-2.5 px-2 sm:px-3">
+          <div class="flex items-center gap-2 min-w-0">
+            <div class="p-1 sm:p-2 rounded bg-yellow-400/10 text-yellow-400 flex-shrink-0">
+              <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
               </svg>
-            </a>
+            </div>
+            <div class="min-w-0">
+              <p class="text-[9px] sm:text-xs text-gray-400 font-semibold uppercase tracking-wider">Salida</p>
+              <p id="public-lugar" class="text-xs sm:text-sm font-bold text-white truncate leading-tight">-</p>
+            </div>
           </div>
+          <a id="public-maps-link" href="#" target="_blank" rel="noopener noreferrer" 
+             title="Abrir en Google Maps"
+             class="px-2 py-1 rounded bg-yellow-400 text-black text-[10px] font-bold flex-shrink-0 hover:bg-yellow-300">
+            Maps
+          </a>
         </div>
 
         <!-- Distancia (KM) -->
-        <div class="stat-card text-center">
-          <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider">Distancia</p>
-          <p id="public-km" class="font-racing text-2xl sm:text-3xl font-extrabold text-yellow-400 mt-1">0 KM</p>
+        <div class="stat-card text-center py-1 sm:py-2">
+          <p class="text-[9px] sm:text-xs text-gray-400 font-semibold uppercase">Distancia</p>
+          <p id="public-km" class="font-racing text-sm sm:text-2xl font-extrabold text-yellow-400 mt-0.5">0 KM</p>
         </div>
 
         <!-- Desnivel Positivo (+) -->
-        <div class="stat-card text-center">
-          <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider">Desnivel (+)</p>
-          <p id="public-desnivel" class="font-racing text-2xl sm:text-3xl font-extrabold text-yellow-400 mt-1">+0 m</p>
+        <div class="stat-card text-center py-1 sm:py-2">
+          <p class="text-[9px] sm:text-xs text-gray-400 font-semibold uppercase">Desnivel</p>
+          <p id="public-desnivel" class="font-racing text-sm sm:text-2xl font-extrabold text-yellow-400 mt-0.5">+0 m</p>
         </div>
 
-        <!-- Duración Estimada (Calculada automáticamente: (KM/Vel) + 30 min parada) -->
-        <div class="stat-card text-center">
-          <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider">Duración Est.</p>
-          <p id="public-duracion" class="font-racing text-2xl sm:text-3xl font-extrabold text-white mt-1">-</p>
-          <p class="text-[10px] text-gray-400 mt-0.5">(incl. parada descanso)</p>
+        <!-- Duración Estimada -->
+        <div class="stat-card text-center py-1 sm:py-2">
+          <p class="text-[9px] sm:text-xs text-gray-400 font-semibold uppercase">Duración</p>
+          <p id="public-duracion" class="font-racing text-sm sm:text-2xl font-extrabold text-white mt-0.5">-</p>
         </div>
 
         <!-- Track GPX Descargable -->
-        <div class="stat-card flex flex-col justify-center items-center">
-          <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider mb-1.5">Track de la Ruta</p>
+        <div class="stat-card flex flex-col justify-center items-center py-1 sm:py-2">
+          <p class="text-[9px] sm:text-xs text-gray-400 font-semibold uppercase mb-0.5">Track</p>
           <button id="public-gpx-btn" 
-                  class="w-full inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-xs font-bold bg-[#1e2433] hover:bg-yellow-400 hover:text-black text-yellow-400 border border-yellow-400/30 transition-all">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  class="w-full inline-flex items-center justify-center gap-1 py-1 px-1.5 rounded text-[10px] sm:text-xs font-bold bg-[#1e2433] hover:bg-yellow-400 hover:text-black text-yellow-400 border border-yellow-400/30">
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
             </svg>
-            <span>Descargar GPX</span>
+            <span>GPX</span>
           </button>
         </div>
 
@@ -191,26 +189,23 @@
       <!-- =======================================================================
            4. SECCIÓN DE INSCRIPCIÓN Y CONTADOR DE PLAZAS (MÁXIMO 50)
            ======================================================================= -->
-      <div class="bg-gradient-to-b from-[#181c26] to-[#12151e] border-2 border-[#2b3347] rounded-2xl p-5 sm:p-7 shadow-xl">
+      <div class="bg-gradient-to-b from-[#181c26] to-[#12151e] border sm:border-2 border-[#2b3347] rounded-xl sm:rounded-2xl p-2.5 sm:p-5 shadow-lg">
         
         <!-- Contador de PLAZAS (Empieza en 50 y va restando) -->
-        <div class="mb-5">
-          <div class="flex items-end justify-between mb-2">
-            <div>
-              <span class="text-xs text-gray-400 uppercase tracking-widest font-bold">Estado del Aforo</span>
-              <div class="flex items-baseline gap-2 mt-0.5">
-                <span class="font-racing text-3xl sm:text-4xl font-black text-yellow-400 tracking-wider">PLAZAS:</span>
-                <span id="public-plazas-count" class="font-racing text-3xl sm:text-4xl font-black text-white">50</span>
-                <span class="text-xs text-gray-400 font-semibold">disponibles (de <span id="public-aforo-total">50</span> máx.)</span>
-              </div>
+        <div class="mb-2 sm:mb-3">
+          <div class="flex items-center justify-between mb-1">
+            <div class="flex items-baseline gap-1.5">
+              <span class="font-racing text-base sm:text-3xl font-black text-yellow-400 tracking-wider">PLAZAS:</span>
+              <span id="public-plazas-count" class="font-racing text-base sm:text-3xl font-black text-white">50</span>
+              <span class="text-[10px] sm:text-xs text-gray-400 font-semibold">libres (de <span id="public-aforo-total">50</span> máx.)</span>
             </div>
-            <span class="text-xs font-bold text-gray-400 bg-black/40 px-3 py-1.5 rounded-lg border border-gray-800">
+            <span class="text-[9px] sm:text-xs font-bold text-gray-400 bg-black/40 px-2 py-0.5 rounded border border-gray-800">
               Aforo estricto
             </span>
           </div>
 
           <!-- Barra de Progreso del Tacómetro -->
-          <div class="meter-container">
+          <div class="meter-container !h-2 sm:!h-3.5">
             <div id="public-plazas-bar" class="meter-fill bg-yellow-400" style="width: 100%;"></div>
           </div>
         </div>
@@ -219,15 +214,19 @@
         <div>
           <button id="btn-abrir-inscripcion" 
                   type="button"
-                  class="btn-apuntate w-full py-4 px-6 rounded-xl text-lg sm:text-xl flex items-center justify-center gap-2 cursor-pointer">
-            <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  class="btn-apuntate w-full py-2.5 sm:py-3.5 px-4 sm:px-6 rounded-lg sm:rounded-xl text-base sm:text-xl flex items-center justify-center gap-2 cursor-pointer shadow-md">
+            <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
             </svg>
             <span>¡APÚNTATE!</span>
           </button>
         </div>
 
-        <p class="text-center text-xs text-gray-400 mt-3">
+        <p class="text-center text-[10px] sm:text-xs text-gray-400 mt-1.5 sm:mt-2">
+          🔒 Inscripción oficial. Confirmación con tu dorsal enviada a tu correo.
+        </p>
+
+      </div>
           🔒 Inscripción oficial. Recibirás un correo de confirmación con tu número de inscripción automáticamente.
         </p>
 
@@ -513,6 +512,15 @@
                 class="w-full py-2.5 px-4 rounded-lg text-sm font-bold bg-yellow-400 hover:bg-yellow-300 text-black transition-colors font-racing">
           Entrar al Panel
         </button>
+
+        <!-- Opción de Recuperación de Contraseña por Correo -->
+        <div class="pt-3 border-t border-gray-800 text-center">
+          <button type="button" id="btn-recuperar-pin" 
+                  class="text-xs text-yellow-400 hover:text-yellow-300 underline font-semibold transition-colors">
+            ¿Olvidaste tu contraseña? Enviar a lopezsanchez.antonio@gmail.com
+          </button>
+          <div id="msg-recuperar-pin" class="hidden text-xs mt-2.5 p-2 rounded text-left"></div>
+        </div>
       </form>
     </div>
   </div>
@@ -582,6 +590,27 @@
            PESTAÑA 1: GESTIÓN DE QUEDADA (ALTA / EDICIÓN)
            ===================================================================== -->
       <div id="tab-quedada" class="admin-tab-content">
+        
+        <!-- Botón Destacado: Crear Nueva Carrera (Restaurar Todo a 0) -->
+        <div class="bg-gradient-to-r from-amber-500/10 via-yellow-500/10 to-transparent border border-amber-500/30 rounded-2xl p-4 sm:p-5 mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="w-3 h-3 rounded-full bg-yellow-400 animate-pulse"></span>
+              <h4 class="font-racing font-extrabold text-yellow-400 text-base sm:text-lg">CREAR NUEVA CARRERA</h4>
+            </div>
+            <p class="text-xs text-gray-300 mt-1 max-w-xl">
+              Pulsa este botón para limpiar el formulario y <strong>restaurar a 0 los inscritos</strong>. Así podrás introducir los datos de una nueva quedada empezando con las <strong>50 plazas libres</strong>.
+            </p>
+          </div>
+          <button type="button" id="btn-crear-carrera-cero"
+                  class="btn-apuntate px-5 py-3 rounded-xl font-bold text-xs sm:text-sm flex items-center gap-2 flex-shrink-0 cursor-pointer shadow-lg hover:scale-105 active:scale-95 transition-all">
+            <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/>
+            </svg>
+            <span>➕ CREAR NUEVA CARRERA (RESTAURAR A 0)</span>
+          </button>
+        </div>
+
         <form id="form-quedada-admin" class="bg-[#151923] border border-[#242c3d] rounded-2xl p-6 space-y-6">
           
           <div class="border-b border-gray-800 pb-3">
