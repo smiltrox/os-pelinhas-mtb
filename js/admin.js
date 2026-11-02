@@ -57,6 +57,16 @@ function setupAdminAuth() {
     });
   }
 
+  // Opción de Recuperar Contraseña de Administrador (Enviar a lopezsanchez.antonio@gmail.com)
+  const btnRecuperarPin = document.getElementById('btn-recuperar-pin');
+  const msgRecuperarPin = document.getElementById('msg-recuperar-pin');
+
+  if (btnRecuperarPin) {
+    btnRecuperarPin.addEventListener('click', async () => {
+      await enviarPinPorCorreo(btnRecuperarPin, msgRecuperarPin);
+    });
+  }
+
   if (formPin) {
     formPin.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -214,12 +224,124 @@ function setupQuedadaForm() {
     });
   }
 
+  // Botón para crear nueva carrera y restaurar todo a 0
+  const btnCrearCero = document.getElementById('btn-crear-carrera-cero');
+  if (btnCrearCero) {
+    btnCrearCero.addEventListener('click', () => {
+      const confirmar = confirm(
+        '⚠️ ¿Deseas CREAR UNA NUEVA CARRERA y RESTAURAR A 0?\n\n' +
+        'Esta acción:\n' +
+        '1. Limpiará los campos del formulario para que introduzcas la nueva ruta.\n' +
+        '2. PONE A 0 LA LISTA DE INSCRITOS (tendrás las 50 plazas libres).\n\n' +
+        '¿Deseas continuar y empezar de 0?'
+      );
+
+      if (confirmar) {
+        restaurarCarreraACero();
+      }
+    });
+  }
+
   // Guardar formulario de la quedada
   if (form) {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       guardarDatosQuedada();
     });
+  }
+}
+
+/**
+ * Restaura toda la carrera a 0 para empezar una nueva
+ */
+function restaurarCarreraACero() {
+  const state = window.PelinaData.getState();
+
+  // 1. Vaciar completamente la lista de inscritos
+  state.inscritos = [];
+
+  // 2. Limpiar datos de la carrera para una nueva
+  state.quedada = {
+    id: 'quedada_' + Date.now(),
+    nombre: 'NUEVA QUEDADA CICLISTA',
+    dia: '',
+    lugarSalida: 'Olivenza (Badajoz)',
+    googleMapsUrl: '',
+    tipoSalida: 'MTB',
+    km: 0,
+    desnivel: 0,
+    velocidadMedia: 18,
+    duracionEstimada: 'Por determinar',
+    dificultad: 'baja',
+    cartelUrl: 'assets/cartel-sample.svg',
+    gpxUrl: '',
+    gpxNombre: 'Ruta.gpx',
+    cuota: 0,
+    bizumTelefono: state.bizumTelefonoDefecto || '612 34 56 78',
+    cuentaBancaria: state.cuentaBancariaDefecto || 'ES91 2100 0418 4502 0005 1332',
+    comida: false,
+    tallaCamiseta: false,
+    aforoMaximo: 50
+  };
+
+  // 3. Guardar en memoria y persistencia
+  window.PelinaData.saveState(state);
+
+  // 4. Actualizar todos los campos visuales
+  loadQuedadaFormValues();
+  renderInscritosTable();
+  window.PelinaPublic.refresh();
+
+  // 5. Scroll suave y confirmación
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  alert('✅ ¡Carrera restaurada a 0 con éxito!\n\nSe han limpiado los datos y tienes las 50 plazas libres para la nueva salida.');
+}
+
+/**
+ * Envía la contraseña del administrador por correo a lopezsanchez.antonio@gmail.com
+ */
+async function enviarPinPorCorreo(btn, msgEl) {
+  const state = window.PelinaData.getState();
+  const pin = state.adminPin || 'pelinhas2024';
+  const emailDestino = 'lopezsanchez.antonio@gmail.com';
+
+  const originalText = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = 'Enviando contraseña al correo...';
+
+  try {
+    const payload = {
+      _subject: '🔐 Clave de Acceso del Administrador - Os Pelinhas MTB',
+      _replyto: emailDestino,
+      'Mensaje': 'Hola Antonio, has solicitado recordar tu clave de acceso al Panel de Administrador de la web de Os Pelinhas MTB.',
+      'Tu Contraseña Actual de Administrador': pin,
+      'Dirección de la Web': 'https://smiltrox.github.io/os-pelinhas-mtb/',
+      'Fecha y Hora': new Date().toLocaleString('es-ES')
+    };
+
+    await fetch(`https://formsubmit.co/ajax/${emailDestino}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (msgEl) {
+      msgEl.className = 'text-xs mt-2.5 p-2 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-left';
+      msgEl.innerHTML = `✅ <strong>Contraseña enviada</strong> con éxito a <code>${emailDestino}</code>. Revisa tu bandeja de entrada o spam.`;
+      msgEl.classList.remove('hidden');
+    }
+  } catch (err) {
+    if (msgEl) {
+      msgEl.className = 'text-xs mt-2.5 p-2 rounded bg-red-500/10 text-red-400 border border-red-500/30 text-left';
+      msgEl.innerHTML = `⚠️ No se pudo enviar el correo en este momento. Tu clave actual es: <strong>${pin}</strong>`;
+      msgEl.classList.remove('hidden');
+    }
+  } finally {
+    btn.disabled = false;
+    btn.textContent = originalText;
   }
 }
 
@@ -612,6 +734,15 @@ function setupSettingsForm() {
         btnTestEmail.disabled = false;
         btnTestEmail.textContent = 'Probar Conexión de Correo';
       }
+    });
+  }
+
+  // Botón para enviar la contraseña actual al correo desde configuración
+  const btnEnviarPinSettings = document.getElementById('btn-enviar-pin-desde-settings');
+  if (btnEnviarPinSettings) {
+    btnEnviarPinSettings.addEventListener('click', async () => {
+      await enviarPinPorCorreo(btnEnviarPinSettings, null);
+      alert('✅ Tu contraseña de acceso ha sido enviada a lopezsanchez.antonio@gmail.com.');
     });
   }
 
