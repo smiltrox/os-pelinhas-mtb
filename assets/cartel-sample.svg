@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1100" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0c10"/>
+      <stop offset="50%" stop-color="#141822"/>
+      <stop offset="100%" stop-color="#050608"/>
+    </linearGradient>
+    <linearGradient id="yellowGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FFE500"/>
+      <stop offset="100%" stop-color="#FFB800"/>
+    </linearGradient>
+    <linearGradient id="mountainGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#1f2636"/>
+      <stop offset="100%" stop-color="#2d374d"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="1100" fill="url(#bgGrad)"/>
+
+  <!-- Geometric Accent Lines & Grid -->
+  <g stroke="#FFE500" stroke-opacity="0.08" stroke-width="1">
+    <line x1="0" y1="200" x2="800" y2="200"/>
+    <line x1="0" y1="400" x2="800" y2="400"/>
+    <line x1="0" y1="600" x2="800" y2="600"/>
+    <line x1="0" y1="800" x2="800" y2="800"/>
+    <line x1="200" y1="0" x2="200" y2="1100"/>
+    <line x1="400" y1="0" x2="400" y2="1100"/>
+    <line x1="600" y1="0" x2="600" y2="1100"/>
+  </g>
+
+  <!-- Dynamic Yellow Racing Stripes -->
+  <polygon points="0,0 160,0 80,1100 0,1100" fill="#FFE500" fill-opacity="0.04"/>
+  <polygon points="760,0 800,0 800,1100 720,1100" fill="#FFE500" fill-opacity="0.04"/>
+
+  <!-- Top Badge Header -->
+  <rect x="250" y="30" width="300" height="36" rx="18" fill="#1e2433" stroke="#FFE500" stroke-width="2"/>
+  <text x="400" y="54" fill="#FFE500" font-family="'Impact', 'Arial Black', sans-serif" font-size="16" letter-spacing="3" text-anchor="middle">QUEDADA OFICIAL 2026</text>
+
+  <!-- Club Name Main Header -->
+  <text x="400" y="130" fill="#FFFFFF" font-family="'Impact', 'Arial Black', sans-serif" font-size="52" letter-spacing="2" text-anchor="middle">OS PELINHAS M.T.B.</text>
+  <text x="400" y="165" fill="#FFE500" font-family="'Arial', sans-serif" font-weight="900" font-size="20" letter-spacing="6" text-anchor="middle">OLIVENZA • EXTREMADURA</text>
+
+  <!-- 20th Anniversary Seal Graphic -->
+  <g transform="translate(400, 260) scale(0.9)">
+    <circle r="75" fill="#0d1017" stroke="#FFE500" stroke-width="6"/>
+    <circle r="65" fill="none" stroke="#FFE500" stroke-width="2" stroke-dasharray="6,4"/>
+    <text x="0" y="-12" fill="#FFE500" font-family="'Impact', sans-serif" font-size="44" text-anchor="middle">20</text>
+    <text x="0" y="12" fill="#FFFFFF" font-family="'Arial Black', sans-serif" font-size="14" letter-spacing="2" text-anchor="middle">AÑOS</text>
+    <text x="0" y="34" fill="#FFE500" font-family="'Arial', sans-serif" font-weight="bold" font-size="12" letter-spacing="1" text-anchor="middle">2007 - 2027</text>
+  </g>
+
+  <!-- Mountains Silhouette -->
+  <g transform="translate(0, 360)">
+    <polygon points="0,320 180,180 340,250 520,120 680,220 800,160 800,500 0,500" fill="url(#mountainGrad)"/>
+    <polygon points="0,350 240,230 450,290 610,180 800,240 800,500 0,500" fill="#121620" opacity="0.9"/>
+    
+    <!-- Bike trail line in mountains -->
+    <path d="M 0 340 Q 200 280 350 310 T 600 230 T 800 290" fill="none" stroke="#FFE500" stroke-width="4" stroke-dasharray="10,6" filter="url(#glow)"/>
+    
+    <!-- Cyclist Silhouette on Peak -->
+    <g transform="translate(515, 95) scale(0.65)">
+      <circle cx="20" cy="8" r="6" fill="#FFE500"/>
+      <path d="M 12 18 L 22 28 L 36 28 M 22 28 L 18 42 M 16 18 L 30 18" stroke="#FFE500" stroke-width="3" stroke-linecap="round" fill="none"/>
+      <!-- Wheels -->
+      <circle cx="2" cy="42" r="14" fill="none" stroke="#FFE500" stroke-width="3"/>
+      <circle cx="44" cy="42" r="14" fill="none" stroke="#FFE500" stroke-width="3"/>
+      <line x1="2" y1="42" x2="20" y2="28" stroke="#FFE500" stroke-width="3"/>
+      <line x1="44" y1="42" x2="26" y2="28" stroke="#FFE500" stroke-width="3"/>
+      <line x1="2" y1="42" x2="26" y2="42" stroke="#FFE500" stroke-width="3"/>
+    </g>
+  </g>
+
+  <!-- Route Title Banner (Highlight Box) -->
+  <g transform="translate(40, 710)">
+    <rect width="720" height="110" rx="16" fill="#181e2b" stroke="#FFE500" stroke-width="3"/>
+    <text x="360" y="45" fill="#FFFFFF" font-family="'Impact', 'Arial Black', sans-serif" font-size="34" letter-spacing="1" text-anchor="middle">RUTA SIERRA DE ALOR</text>
+    <text x="360" y="85" fill="#FFE500" font-family="'Arial Black', sans-serif" font-size="22" letter-spacing="2" text-anchor="middle">PUERTO DE LAS PALOMAS &amp; MIRADOR</text>
+  </g>
+
+  <!-- Key Specs Badges (KM, Desnivel, Aforo) -->
+  <g transform="translate(50, 850)">
+    <!-- Box 1: KM -->
+    <rect x="0" y="0" width="215" height="110" rx="12" fill="#121622" stroke="#2d374d" stroke-width="2"/>
+    <text x="107" y="32" fill="#9ca3af" font-family="'Arial', sans-serif" font-weight="bold" font-size="14" text-anchor="middle">DISTANCIA</text>
+    <text x="107" y="78" fill="#FFE500" font-family="'Impact', sans-serif" font-size="42" text-anchor="middle">58 KM</text>
+    <text x="107" y="98" fill="#ffffff" font-family="'Arial', sans-serif" font-size="12" text-anchor="middle">Pistas &amp; Senderos</text>
+
+    <!-- Box 2: Desnivel -->
+    <rect x="242" y="0" width="215" height="110" rx="12" fill="#121622" stroke="#2d374d" stroke-width="2"/>
+    <text x="350" y="32" fill="#9ca3af" font-family="'Arial', sans-serif" font-weight="bold" font-size="14" text-anchor="middle">DESNIVEL</text>
+    <text x="350" y="78" fill="#FFE500" font-family="'Impact', sans-serif" font-size="42" text-anchor="middle">+1.150 m</text>
+    <text x="350" y="98" fill="#ffffff" font-family="'Arial', sans-serif" font-size="12" text-anchor="middle">Dificultad Moderada</text>
+
+    <!-- Box 3: Plazas Limitadas -->
+    <rect x="485" y="0" width="215" height="110" rx="12" fill="#121622" stroke="#FFE500" stroke-width="2"/>
+    <text x="592" y="32" fill="#FFE500" font-family="'Arial', sans-serif" font-weight="bold" font-size="14" text-anchor="middle">MÁXIMO AFORO</text>
+    <text x="592" y="78" fill="#FFFFFF" font-family="'Impact', sans-serif" font-size="42" text-anchor="middle">50 PLAZAS</text>
+    <text x="592" y="98" fill="#FFE500" font-family="'Arial', sans-serif" font-weight="bold" font-size="12" text-anchor="middle">¡Inscripción obligatoria!</text>
+  </g>
+
+  <!-- Footer Info Banner -->
+  <g transform="translate(0, 1000)">
+    <rect width="800" height="100" fill="#FFE500"/>
+    <text x="400" y="42" fill="#111827" font-family="'Impact', sans-serif" font-size="28" letter-spacing="1" text-anchor="middle">PUNTO DE SALIDA: PLAZA DE LA CONSTITUCIÓN (OLIVENZA)</text>
+    <text x="400" y="74" fill="#111827" font-family="'Arial', sans-serif" font-weight="bold" font-size="16" letter-spacing="1" text-anchor="middle">08:30 H • CASCO OBLIGATORIO • SEGURO INCLUIDO</text>
+  </g>
+</svg>
