@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="es" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OS PELINHAS M.T.B. - Quedadas Ciclistas Oficiales</title>
+  <meta name="description" content="Inscripción y detalles para las quedadas ciclistas de MTB y Carretera de Os Pelinhas MTB Olivenza (2007-2027).">
+  
+  <!-- Favicon con Logo del Club -->
+  <link rel="icon" type="image/png" href="assets/logo.png">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            pelina: {
+              yellow: '#FFE500',
+              'yellow-dark': '#F0D500',
+              dark: '#0d0f14',
+              card: '#151821',
+              border: '#232836'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts & Custom Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Confetti JS para la celebración de inscripción -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+</head>
+<body class="bg-[#0b0d12] text-gray-100 flex flex-col min-h-screen">
+
+  <!-- =========================================================================
+       CABECERA PRINCIPAL (NAVBAR)
+       ========================================================================= -->
+  <header class="sticky top-0 z-40 bg-[#0d0f14]/95 backdrop-blur-md border-b border-[#232836]">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
+      
+      <!-- Logo y Título -->
+      <a href="#" class="flex items-center gap-3.5 group">
+        <div class="relative w-12 h-12 flex-shrink-0 bg-black rounded-full p-1 border-2 border-yellow-400 group-hover:scale-105 transition-transform duration-200 shadow-md shadow-yellow-500/20">
+          <img src="assets/logo.png" alt="Logo Os Pelinhas MTB" class="w-full h-full object-contain">
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-racing text-lg sm:text-xl font-extrabold tracking-wider text-white group-hover:text-yellow-400 transition-colors">
+              OS PELINHAS M.T.B.
+            </span>
+            <span class="hidden sm:inline-block px-2 py-0.5 rounded text-[10px] font-bold bg-yellow-400 text-black">
+              20 AÑOS
+            </span>
+          </div>
+          <p class="text-xs text-gray-400 font-medium">Olivenza • Quedadas MTB & Carretera</p>
+        </div>
+      </a>
+
+      <!-- Botones de Acción de Cabecera -->
+      <div class="flex items-center gap-3">
+        <!-- Acceso Admin (Discreto para Antonio) -->
+        <button id="btn-nav-admin" 
+                title="Acceso restringido al Administrador"
+                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#1a1e29] hover:bg-[#252b3b] text-gray-300 hover:text-yellow-400 border border-[#2d3548] transition-colors">
+          <svg class="w-4 h-4 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+          </svg>
+          <span class="hidden sm:inline">Panel Admin</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       VISTA PÚBLICA / INVITADOS (SECCIÓN PRINCIPAL)
+       ========================================================================= -->
+  <main id="public-view" class="flex-grow py-6 sm:py-10 px-4 sm:px-6">
+    <div class="max-w-4xl mx-auto">
+
+      <!-- =======================================================================
+           1. NOMBRE DE LA QUEDADA (OBLIGATORIAMENTE ENCIMA DEL CARTEL Y BIEN VISIBLE)
+           ======================================================================= -->
+      <div class="text-center mb-6">
+        <!-- Badges de Modalidad y Semáforo de Dificultad -->
+        <div class="flex flex-wrap items-center justify-center gap-2.5 mb-3">
+          <!-- Badge MTB o Carretera -->
+          <div id="public-modalidad-badge"></div>
+
+          <!-- Semáforo de Dificultad: Baja (Verde), Moderada (Amarillo), Difícil (Rojo) -->
+          <div id="public-dificultad-badge"></div>
+        </div>
+
+        <!-- Título Principal de la Quedada (Grande y Visible) -->
+        <h1 id="public-quedada-nombre" 
+            class="font-racing text-2xl sm:text-4xl md:text-5xl font-black text-white tracking-wide uppercase leading-tight drop-shadow-md">
+          CARGANDO QUEDADA...
+        </h1>
+        
+        <div class="h-1 w-24 bg-yellow-400 mx-auto mt-3 rounded-full glow-yellow-sm"></div>
+      </div>
+
+      <!-- =======================================================================
+           2. CARTEL DE LA QUEDADA (ELEMENTO MÁS VISIBLE DE LA APLICACIÓN)
+           ======================================================================= -->
+      <div class="poster-container mb-8 max-w-2xl mx-auto border-2 border-yellow-400/40">
+        <img id="public-cartel-img" 
+             src="assets/cartel-sample.svg" 
+             alt="Cartel Oficial de la Quedada Ciclista" 
+             class="poster-image">
+      </div>
+
+      <!-- =======================================================================
+           3. FICHA TÉCNICA Y DATOS CLAVE DE LA RUTA
+           ======================================================================= -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-6">
+        
+        <!-- Fecha / Día -->
+        <div class="stat-card col-span-2 sm:col-span-2 flex items-start gap-3">
+          <div class="p-2.5 rounded-lg bg-yellow-400/10 text-yellow-400 flex-shrink-0">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+            </svg>
+          </div>
+          <div>
+            <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider">Día y Hora</p>
+            <p id="public-dia" class="text-sm sm:text-base font-bold text-white mt-0.5 leading-snug">-</p>
+          </div>
+        </div>
+
+        <!-- Lugar de Salida -->
+        <div class="stat-card col-span-2 sm:col-span-2 flex items-start gap-3">
+          <div class="p-2.5 rounded-lg bg-yellow-400/10 text-yellow-400 flex-shrink-0">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+            </svg>
+          </div>
+          <div class="flex-grow">
+            <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider">Lugar de Salida</p>
+            <p id="public-lugar" class="text-sm sm:text-base font-bold text-white mt-0.5 leading-snug">-</p>
+            <a id="public-maps-link" href="#" target="_blank" rel="noopener noreferrer" 
+               class="inline-flex items-center gap-1 text-xs font-semibold text-yellow-400 hover:text-yellow-300 hover:underline mt-1.5">
+              <span>Ver en Google Maps</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Distancia (KM) -->
+        <div class="stat-card text-center">
+          <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider">Distancia</p>
+          <p id="public-km" class="font-racing text-2xl sm:text-3xl font-extrabold text-yellow-400 mt-1">0 KM</p>
+        </div>
+
+        <!-- Desnivel Positivo (+) -->
+        <div class="stat-card text-center">
+          <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider">Desnivel (+)</p>
+          <p id="public-desnivel" class="font-racing text-2xl sm:text-3xl font-extrabold text-yellow-400 mt-1">+0 m</p>
+        </div>
+
+        <!-- Duración Estimada (Calculada automáticamente: (KM/Vel) + 30 min parada) -->
+        <div class="stat-card text-center">
+          <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider">Duración Est.</p>
+          <p id="public-duracion" class="font-racing text-2xl sm:text-3xl font-extrabold text-white mt-1">-</p>
+          <p class="text-[10px] text-gray-400 mt-0.5">(incl. parada descanso)</p>
+        </div>
+
+        <!-- Track GPX Descargable -->
+        <div class="stat-card flex flex-col justify-center items-center">
+          <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider mb-1.5">Track de la Ruta</p>
+          <button id="public-gpx-btn" 
+                  class="w-full inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-xs font-bold bg-[#1e2433] hover:bg-yellow-400 hover:text-black text-yellow-400 border border-yellow-400/30 transition-all">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            <span>Descargar GPX</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- =======================================================================
+           4. SECCIÓN DE INSCRIPCIÓN Y CONTADOR DE PLAZAS (MÁXIMO 50)
+           ======================================================================= -->
+      <div class="bg-gradient-to-b from-[#181c26] to-[#12151e] border-2 border-[#2b3347] rounded-2xl p-5 sm:p-7 shadow-xl">
+        
+        <!-- Contador de PLAZAS (Empieza en 50 y va restando) -->
+        <div class="mb-5">
+          <div class="flex items-end justify-between mb-2">
+            <div>
+              <span class="text-xs text-gray-400 uppercase tracking-widest font-bold">Estado del Aforo</span>
+              <div class="flex items-baseline gap-2 mt-0.5">
+                <span class="font-racing text-3xl sm:text-4xl font-black text-yellow-400 tracking-wider">PLAZAS:</span>
+                <span id="public-plazas-count" class="font-racing text-3xl sm:text-4xl font-black text-white">50</span>
+                <span class="text-xs text-gray-400 font-semibold">disponibles (de <span id="public-aforo-total">50</span> máx.)</span>
+              </div>
+            </div>
+            <span class="text-xs font-bold text-gray-400 bg-black/40 px-3 py-1.5 rounded-lg border border-gray-800">
+              Aforo estricto
+            </span>
+          </div>
+
+          <!-- Barra de Progreso del Tacómetro -->
+          <div class="meter-container">
+            <div id="public-plazas-bar" class="meter-fill bg-yellow-400" style="width: 100%;"></div>
+          </div>
+        </div>
+
+        <!-- Botón de Inscripción Dinámico (Se bloquea y cambia automáticamente si plazas == 0) -->
+        <div>
+          <button id="btn-abrir-inscripcion" 
+                  type="button"
+                  class="btn-apuntate w-full py-4 px-6 rounded-xl text-lg sm:text-xl flex items-center justify-center gap-2 cursor-pointer">
+            <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+            </svg>
+            <span>¡APÚNTATE!</span>
+          </button>
+        </div>
+
+        <p class="text-center text-xs text-gray-400 mt-3">
+          🔒 Inscripción oficial. Recibirás un correo de confirmación con tu número de inscripción automáticamente.
+        </p>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- =========================================================================
+       VENTANA EMERGENTE (MODAL DE APÚNTATE)
+       ========================================================================= -->
+  <div id="modal-registro" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 modal-backdrop hidden">
+    
+    <!-- Contenedor del Modal -->
+    <div class="bg-[#12151e] border-2 border-yellow-400/50 rounded-2xl w-full max-w-xl shadow-2xl overflow-hidden modal-content relative">
+      
+      <!-- Cabecera del Modal -->
+      <div class="bg-gradient-to-r from-yellow-400 to-yellow-500 text-black px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <span class="font-racing font-extrabold text-lg tracking-wider">FORMULARIO DE INSCRIPCIÓN</span>
+        </div>
+        <button id="btn-cerrar-modal" class="p-1 rounded-lg hover:bg-black/10 text-black transition-colors" title="Cerrar">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- PASO 1: FORMULARIO -->
+      <div id="modal-step-form" class="p-6">
+        <form id="form-inscripcion" class="space-y-4">
+          
+          <!-- Nombre y Apellidos -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label for="input-nombre" class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-1">
+                Nombre <span class="text-yellow-400">*</span>
+              </label>
+              <input type="text" id="input-nombre" required placeholder="Ej. Antonio"
+                     class="w-full bg-[#1b202c] border border-[#2e374d] rounded-lg px-3.5 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-yellow-400 text-sm">
+            </div>
+            <div>
+              <label for="input-apellidos" class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-1">
+                Apellidos <span class="text-yellow-400">*</span>
+              </label>
+              <input type="text" id="input-apellidos" required placeholder="Ej. López Sánchez"
+                     class="w-full bg-[#1b202c] border border-[#2e374d] rounded-lg px-3.5 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-yellow-400 text-sm">
+            </div>
+          </div>
+
+          <!-- Email y Teléfono -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label for="input-email" class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-1">
+                Email <span class="text-yellow-400">*</span>
+              </label>
+              <input type="email" id="input-email" required placeholder="tuemail@ejemplo.com"
+                     class="w-full bg-[#1b202c] border border-[#2e374d] rounded-lg px-3.5 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-yellow-400 text-sm">
+              <span class="text-[10px] text-gray-400">Aquí te enviaremos tu comprobante con el número de dorsal.</span>
+            </div>
+            <div>
+              <label for="input-telefono" class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-1">
+                Teléfono de contacto <span class="text-yellow-400">*</span>
+              </label>
+              <input type="tel" id="input-telefono" required placeholder="Ej. 612 34 56 78"
+                     class="w-full bg-[#1b202c] border border-[#2e374d] rounded-lg px-3.5 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-yellow-400 text-sm">
+              <span class="text-[10px] text-gray-400">Para emergencias y avisos de la ruta.</span>
+            </div>
+          </div>
+
+          <!-- SECCIÓN CONDICIONAL: TALLA DE CAMISETA -->
+          <div id="modal-seccion-camiseta" class="hidden pt-2 border-t border-[#232836]">
+            <label for="input-talla-camiseta" class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-1">
+              Talla de camiseta oficial <span class="text-yellow-400">*</span>
+            </label>
+            <select id="input-talla-camiseta" 
+                    class="w-full bg-[#1b202c] border border-[#2e374d] rounded-lg px-3.5 py-2.5 text-white focus:outline-none focus:border-yellow-400 text-sm">
+              <option value="">Selecciona tu talla...</option>
+              <option value="XS">XS (Extra Pequeña)</option>
+              <option value="S">S (Pequeña)</option>
+              <option value="M">M (Mediana)</option>
+              <option value="L">L (Grande)</option>
+              <option value="XL">XL (Extra Grande)</option>
+              <option value="XXL">XXL (Doble Extra Grande)</option>
+              <option value="XXXL">XXXL (Triple Extra Grande)</option>
+            </select>
+          </div>
+
+          <!-- SECCIÓN CONDICIONAL: COMIDA Y CHECK DE INTOLERANCIAS -->
+          <div id="modal-seccion-comida" class="hidden pt-2 border-t border-[#232836] space-y-2.5">
+            <div class="flex items-center gap-2">
+              <input type="checkbox" id="input-asistir-comida" checked 
+                     class="w-4 h-4 text-yellow-400 bg-gray-700 border-gray-600 rounded focus:ring-yellow-400">
+              <label for="input-asistir-comida" class="text-sm font-semibold text-white">
+                🍽️ Me quedo a la comida de convivencia del club
+              </label>
+            </div>
+
+            <div class="pl-6">
+              <div class="flex items-center gap-2">
+                <input type="checkbox" id="input-tiene-intolerancias" 
+                       class="w-4 h-4 text-yellow-400 bg-gray-700 border-gray-600 rounded focus:ring-yellow-400">
+                <label for="input-tiene-intolerancias" class="text-xs font-medium text-amber-300">
+                  ¿Tienes alguna intolerancia o alergia alimentaria?
+                </label>
+              </div>
+
+              <!-- Campo libre de observaciones cuando se marca el check -->
+              <div id="contenedor-observaciones-intolerancias" class="hidden mt-2">
+                <label for="input-observaciones-intolerancias" class="block text-[11px] font-bold text-gray-300 uppercase mb-1">
+                  Observaciones / Alergias para la cocina:
+                </label>
+                <textarea id="input-observaciones-intolerancias" rows="2" 
+                          placeholder="Indica celiaquía (sin gluten), intolerancia a la lactosa, marisco, frutos secos, vegetariano, etc."
+                          class="w-full bg-[#1b202c] border border-[#2e374d] rounded-lg p-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-yellow-400 text-xs"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- SECCIÓN CONDICIONAL: CUOTA DE PAGO (BIZUM Y CUENTA BANCARIA) -->
+          <div id="modal-seccion-pago" class="hidden pt-3 border-t border-[#232836]">
+            <div class="bg-gradient-to-r from-amber-500/10 to-yellow-500/10 border border-amber-500/30 rounded-xl p-3.5 mb-3">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-amber-300 uppercase tracking-wider">Cuota de Inscripción</span>
+                <span id="modal-cuota-importe" class="font-racing text-xl font-black text-yellow-400">0.00 €</span>
+              </div>
+              <p class="text-xs text-gray-300 leading-relaxed mb-3">
+                Esta quedada tiene una cuota para cubrir avituallamientos y gastos organizativos. Elige tu forma de pago preferida:
+              </p>
+
+              <!-- Opción Bizum -->
+              <div class="bg-[#151924] border border-[#2b3347] rounded-lg p-3 mb-2.5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+                <div>
+                  <div class="flex items-center gap-1.5">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+                    <span class="text-xs font-bold text-white uppercase">Opción 1: BIZUM al Club</span>
+                  </div>
+                  <div class="flex items-baseline gap-2 mt-1">
+                    <span class="text-xs text-gray-400">Teléfono:</span>
+                    <span id="modal-bizum-telefono" class="font-mono font-bold text-yellow-400 text-base">612 34 56 78</span>
+                  </div>
+                  <p class="text-[10px] text-gray-400 mt-0.5">Concepto: "Nombre + Quedada"</p>
+                </div>
+                <button type="button" data-copy-target="modal-bizum-telefono"
+                        class="px-3 py-1.5 rounded text-xs font-bold bg-[#232a3b] hover:bg-yellow-400 hover:text-black text-gray-200 transition-colors flex-shrink-0">
+                  Copiar teléfono
+                </button>
+              </div>
+
+              <!-- Opción Transferencia Cuenta Corriente -->
+              <div class="bg-[#151924] border border-[#2b3347] rounded-lg p-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+                <div>
+                  <div class="flex items-center gap-1.5">
+                    <span class="w-2.5 h-2.5 rounded-full bg-blue-400"></span>
+                    <span class="text-xs font-bold text-white uppercase">Opción 2: Transferencia Bancaria</span>
+                  </div>
+                  <div class="mt-1">
+                    <span id="modal-cuenta-iban" class="font-mono text-xs font-bold text-gray-200 block break-all">ES91 2100 0418 4502 0005 1332</span>
+                  </div>
+                  <p class="text-[10px] text-gray-400 mt-0.5">Concepto: "Nombre + Quedada"</p>
+                </div>
+                <button type="button" data-copy-target="modal-cuenta-iban"
+                        class="px-3 py-1.5 rounded text-xs font-bold bg-[#232a3b] hover:bg-yellow-400 hover:text-black text-gray-200 transition-colors flex-shrink-0">
+                  Copiar IBAN
+                </button>
+              </div>
+
+              <!-- Selector de preferencia de pago -->
+              <div class="mt-3 flex items-center gap-4 text-xs text-gray-300">
+                <span class="font-bold">Abonaré por:</span>
+                <label class="inline-flex items-center gap-1.5 cursor-pointer">
+                  <input type="radio" name="modal_metodo_pago" value="BIZUM" checked class="text-yellow-400">
+                  <span>Bizum</span>
+                </label>
+                <label class="inline-flex items-center gap-1.5 cursor-pointer">
+                  <input type="radio" name="modal_metodo_pago" value="TRANSFERENCIA" class="text-yellow-400">
+                  <span>Transferencia</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Botón Enviar Formulario -->
+          <div class="pt-3">
+            <button id="btn-submit-inscripcion" type="submit"
+                    class="btn-apuntate w-full py-3.5 px-4 rounded-xl text-base font-extrabold flex items-center justify-center gap-2">
+              <span>CONFIRMAR INSCRIPCIÓN</span>
+              <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+              </svg>
+            </button>
+          </div>
+
+        </form>
+      </div>
+
+      <!-- PASO 2: PANTALLA DE ÉXITO Y COMPROBANTE -->
+      <div id="modal-step-success" class="p-6 hidden text-center">
+        
+        <div class="w-16 h-16 bg-yellow-400/20 text-yellow-400 rounded-full flex items-center justify-center mx-auto mb-4 border-2 border-yellow-400">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/>
+          </svg>
+        </div>
+
+        <h3 class="font-racing text-2xl font-black text-white uppercase tracking-wider mb-1">
+          ¡INSCRIPCIÓN COMPLETADA!
+        </h3>
+        <p class="text-xs text-gray-300 mb-4">
+          Te has registrado correctamente en <span id="success-quedada-titulo" class="font-bold text-yellow-400"></span>.
+        </p>
+
+        <!-- Tarjeta de Dorsal Asignado -->
+        <div class="bg-gradient-to-br from-[#1a1f2c] to-[#11141c] border-2 border-yellow-400 rounded-xl p-5 mb-5 max-w-sm mx-auto shadow-lg">
+          <span class="text-xs font-bold text-gray-400 uppercase tracking-widest block">Tu Número de Inscripción</span>
+          <div id="success-dorsal-num" class="font-racing text-5xl font-black text-yellow-400 my-1 glow-yellow-text">
+            #1
+          </div>
+          <p id="success-participante-nombre" class="text-base font-bold text-white mt-1">-</p>
+          <div class="text-xs text-gray-400 mt-1 flex flex-col gap-0.5">
+            <span>Email: <strong id="success-participante-email" class="text-gray-300">-</strong></span>
+            <span>Teléfono: <strong id="success-participante-telefono" class="text-gray-300">-</strong></span>
+          </div>
+        </div>
+
+        <!-- Notificación de Correo Automático -->
+        <div id="success-aviso-email" class="bg-[#181d28] border border-[#2b354a] rounded-lg p-3 text-xs text-gray-300 mb-5 text-left">
+          <!-- Rellenado por JS -->
+        </div>
+
+        <!-- Botones de Acción -->
+        <div class="flex flex-col sm:flex-row gap-2.5">
+          <button id="btn-imprimir-comprobante" type="button"
+                  class="flex-1 py-2.5 px-4 rounded-lg text-xs font-bold bg-[#232938] hover:bg-[#2e374b] text-white border border-gray-700 transition-colors inline-flex items-center justify-center gap-1.5">
+            <svg class="w-4 h-4 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
+            </svg>
+            <span>Imprimir Resguardo</span>
+          </button>
+          
+          <button onclick="document.getElementById('modal-registro').classList.add('hidden'); document.body.style.overflow='';"
+                  class="flex-1 py-2.5 px-4 rounded-lg text-xs font-bold bg-yellow-400 hover:bg-yellow-300 text-black transition-colors">
+            Aceptar y Cerrar
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL DE PIN DE SEGURIDAD (ACCESO ADMINISTRADOR)
+       ========================================================================= -->
+  <div id="modal-admin-pin" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop hidden">
+    <div class="bg-[#151923] border border-yellow-400/40 rounded-2xl w-full max-w-sm p-6 shadow-2xl relative">
+      <button id="btn-cerrar-pin-modal" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+
+      <div class="text-center mb-5">
+        <div class="w-12 h-12 bg-yellow-400/10 text-yellow-400 rounded-full flex items-center justify-center mx-auto mb-3">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+          </svg>
+        </div>
+        <h3 class="font-racing text-xl font-bold text-white uppercase">Acceso Administrador</h3>
+        <p class="text-xs text-gray-400 mt-1">Introduce la clave de acceso de Antonio</p>
+      </div>
+
+      <form id="form-admin-pin" class="space-y-4">
+        <div>
+          <input type="password" id="input-admin-pin" required placeholder="Clave de acceso..."
+                 class="w-full bg-[#1e2432] border border-[#2d374d] rounded-lg px-4 py-2.5 text-center text-white text-base focus:outline-none focus:border-yellow-400 tracking-widest font-mono">
+          <p id="pin-error-msg" class="text-xs text-red-400 mt-1.5 text-center hidden">
+            Clave incorrecta. Por defecto es: <code>pelinhas2024</code>
+          </p>
+        </div>
+
+        <button type="submit" 
+                class="w-full py-2.5 px-4 rounded-lg text-sm font-bold bg-yellow-400 hover:bg-yellow-300 text-black transition-colors font-racing">
+          Entrar al Panel
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       PANEL DE ADMINISTRADOR (EXCLUSIVO PARA ANTONIO)
+       ========================================================================= -->
+  <section id="admin-view" class="flex-grow py-6 sm:py-8 px-4 sm:px-6 hidden">
+    <div class="max-w-6xl mx-auto">
+
+      <!-- Cabecera del Panel Admin -->
+      <div class="bg-[#151923] border border-[#242c3d] rounded-2xl p-4 sm:p-6 mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 bg-yellow-400 text-black rounded-xl flex items-center justify-center font-racing font-black text-2xl shadow-md">
+            P
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h2 class="font-racing text-xl sm:text-2xl font-black text-white">PANEL DE ADMINISTRACIÓN</h2>
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-yellow-400 text-black uppercase">Antonio</span>
+            </div>
+            <p class="text-xs text-gray-400">Gestión de quedadas, aforo estricto de 50 plazas y listado de participantes.</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 self-end sm:self-center">
+          <button id="btn-volver-web" 
+                  class="px-3 py-2 rounded-lg text-xs font-semibold bg-[#1e2432] hover:bg-[#283144] text-gray-200 border border-gray-700 transition-colors inline-flex items-center gap-1.5">
+            <svg class="w-4 h-4 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+            </svg>
+            <span>Ver Web Pública</span>
+          </button>
+          
+          <button id="btn-admin-logout" 
+                  class="px-3 py-2 rounded-lg text-xs font-semibold bg-red-950/40 hover:bg-red-900/40 text-red-300 border border-red-800/40 transition-colors inline-flex items-center gap-1.5">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+            </svg>
+            <span>Cerrar Sesión</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Barra de Navegación de Pestañas -->
+      <div id="admin-tabs-nav" class="flex border-b border-[#242c3d] mb-6 overflow-x-auto">
+        <button class="admin-tab-btn px-5 py-3 font-racing text-sm font-bold border-b-2 border-yellow-400 text-yellow-400 whitespace-nowrap" data-tab="tab-quedada">
+          🚵‍♂️ GESTIÓN DE QUEDADA
+        </button>
+        <button class="admin-tab-btn px-5 py-3 font-racing text-sm font-bold border-b-2 border-transparent text-gray-400 hover:text-white whitespace-nowrap" data-tab="tab-inscritos">
+          👥 APARTADO DE INSCRITOS
+        </button>
+        <button class="admin-tab-btn px-5 py-3 font-racing text-sm font-bold border-b-2 border-transparent text-gray-400 hover:text-white whitespace-nowrap" data-tab="tab-configuracion">
+          ⚙️ CONFIGURACIÓN Y CORREOS
+        </button>
+      </div>
+
+      <!-- ALERTA DE GUARDADO CON ÉXITO -->
+      <div id="admin-save-alert" class="hidden mb-6 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-sm font-semibold flex items-center gap-2">
+        <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+        </svg>
+        <span>¡Cambios guardados con éxito! Los datos públicos se han actualizado al instante.</span>
+      </div>
+
+      <!-- =====================================================================
+           PESTAÑA 1: GESTIÓN DE QUEDADA (ALTA / EDICIÓN)
+           ===================================================================== -->
+      <div id="tab-quedada" class="admin-tab-content">
+        <form id="form-quedada-admin" class="bg-[#151923] border border-[#242c3d] rounded-2xl p-6 space-y-6">
+          
+          <div class="border-b border-gray-800 pb-3">
+            <h3 class="font-racing text-lg font-bold text-yellow-400">DATOS PÚBLICOS DE LA PRUEBA</h3>
+            <p class="text-xs text-gray-400">Todos estos campos son obligatorios y serán visibles para los invitados.</p>
+          </div>
+
+          <!-- Nombre de la Quedada (ENCIMA DEL CARTEL) -->
+          <div>
+            <label for="admin-input-nombre" class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-1">
+              Nombre de la Quedada <span class="text-yellow-400">* (Irá obligatoriamente encima del cartel)</span>
+            </label>
+            <input type="text" id="admin-input-nombre" required 
+                   placeholder="Ej. RUTA SIERRA DE ALOR - 20º ANIVERSARIO"
+                   class="w-full bg-[#1e2432] border border-[#2d374d] rounded-lg px-4 py-3 text-white text-base font-bold focus:outline-none focus:border-yellow-400">
+          </div>
+
+          <!-- Día y Hora & Modalidad -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="sm:col-span-2">
+              <label for="admin-input-dia" class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-1">
+                Día y Hora de Salida <span class="text-yellow-400">*</span>
+              </label>
+              <input type="text" id="admin-input-dia" required 
+                     placeholder="Ej. Domingo, 15 de Noviembre de 2026 - 08:30 h"
+                     class="w-full bg-[#1e2432] border border-[#2d374d] rounded-lg px-3.5 py-2.5 text-white text-sm focus:outline-none focus:border-yellow-400">
+            </div>
+
+            <div>
+              <label for="admin-input-tipo" class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-1">
+                Tipo de Salida <span class="text-yellow-400">*</span>
+              </label>
+              <select id="admin-input-tipo" 
+                      class="w-full bg-[#1e2432] border border-[#2d374d] rounded-lg px-3.5 py-2.5 text-white text-sm font-bold focus:outline-none focus:border-yellow-400">
+                <option value="MTB">🚵‍♂️ MTB (Bicicleta de Montaña)</option>
+                <option value="CARRETERA">🚴‍♂️ CARRETERA (Bicicleta de Ruta)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Lugar de Salida y Enlace a Google Maps -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label for="admin-input-lugar" class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-1">
+                Lugar de Salida (Dirección) <span class="text-yellow-400">*</span>
+              </label>
+              <input type="text" id="admin-input-lugar" required 
+                     placeholder="Ej. Plaza de la Constitución, Olivenza"
+                     class="w-full bg-[#1e2432] border border-[#2d374d] rounded-lg px-3.5 py-2.5 text-white text-sm focus:outline-none focus:border-yellow-400">
+            </div>
+
+            <div>
+              <label for="admin-input-maps" class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-1">
+                Enlace a Google Maps del Punto de Encuentro <span class="text-yellow-400">*</span>
+              </label>
+              <input type="url" id="admin-input-maps" required 
+                     placeholder="https://maps.google.com/?q=Plaza+Olivenza"
+                     class="w-full bg-[#1e2432] border border-[#2d374d] rounded-lg px-3.5 py-2.5 text-white text-sm focus:outline-none focus:border-yellow-400">
+            </div>
+          </div>
+
+          <!-- KM, Desnivel, Velocidad Media (Cálculo Privado) y Dificultad -->
+          <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 p-4 rounded-xl bg-[#1b202c] border border-[#2b354a]">
+            <div>
+              <label for="admin-input-km" class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-1">
+                Distancia (KM) <span class="text-yellow-400">*</span>
+              </label>
+              <input type="number" step="0.1" id="admin-input-km" required 
+                     placeholder="Ej. 58"
+                     class="w-full bg-[#12151e] border border-[#2d374d] rounded-lg px-3 py-2 text-white text-sm font-bold focus:outline-none focus:border-yellow-400">
+            </div>
+
+            <div>
+              <label for="admin-input-desnivel" class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-1">
+                Desnivel (+) en m <span class="text-yellow-400">*</span>
+              </label>
+              <input type="number" id="admin-input-desnivel" required 
+                     placeholder="Ej. 1150"
+                     class="w-full bg-[#12151e] border border-[#2d374d] rounded-lg px-3 py-2 text-white text-sm font-bold focus:outline-none focus:border-yellow-400">
+            </div>
+
+            <!-- VELOCIDAD MEDIA (CAMPO PRIVADO DEL ADMIN) -->
+            <div>
+              <label for="admin-input-vel" class="block text-xs font-bold text-amber-300 uppercase tracking-wider mb-1">
+                Velocidad Media (km/h) 🔒
+              </label>
+              <input type="number" step="0.1" id="admin-input-vel" required 
+                     placeholder="Ej. 18"
+                     class="w-full bg-[#12151e] border border-amber-500/40 rounded-lg px-3 py-2 text-yellow-300 text-sm font-bold focus:outline-none focus:border-yellow-400">
+              <span class="text-[10px] text-gray-400">Solo visible por ti.</span>
+            </div>
+
+            <!-- Semáforo de Dificultad -->
+            <div>
+              <label for="admin-input-dificultad" class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-1">
+                Semáforo Dificultad <span class="text-yellow-400">*</span>
+              </label>
+              <select id="admin-input-dificultad" 
+                      class="w-full bg-[#12151e] border border-[#2d374d] rounded-lg px-3 py-2 text-white text-sm font-bold focus:outline-none focus:border-yellow-400">
+                <option value="baja">🟢 Baja (Verde)</option>
+                <option value="moderada">🟡 Moderada (Amarillo)</option>
+                <option value="dificil">🔴 Difícil (Rojo)</option>
+              </select>
+            </div>
+
+            <!-- Previsualización del cálculo de duración -->
+            <div class="col-span-1 sm:col-span-4 pt-2 border-t border-gray-700/50 flex items-center justify-between">
+              <div>
+                <span class="text-xs font-bold text-gray-400 uppercase">Duración Estimada para los Invitados:</span>
+                <div id="admin-preview-duracion" class="mt-0.5"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Cartel de la Quedada (Subir foto o poner URL) -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-1">
+                Foto del Cartel Oficial <span class="text-yellow-400">*</span>
+              </label>
+              <div class="space-y-2">
+                <input type="file" id="admin-input-cartel-file" accept="image/*"
+                       class="w-full text-xs text-gray-400 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-yellow-400 file:text-black hover:file:bg-yellow-300 cursor-pointer">
+                <input type="text" id="admin-input-cartel-url" 
+                       placeholder="O pega aquí una URL de imagen (ej. assets/cartel-sample.svg)"
+                       class="w-full bg-[#1e2432] border border-[#2d374d] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-yellow-400">
+              </div>
+            </div>
+
+            <div class="flex items-center gap-4">
+              <div class="w-24 h-32 rounded-lg bg-black border border-gray-700 overflow-hidden flex-shrink-0">
+                <img id="admin-preview-cartel-img" src="assets/cartel-sample.svg" alt="Preview Cartel" class="w-full h-full object-cover">
+              </div>
+              <p class="text-xs text-gray-400">
+                Vista previa del cartel que verán los invitados como elemento más visible de la web.
+              </p>
+            </div>
+          </div>
+
+          <!-- Track GPX Descargable -->
+          <div>
+            <label class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-1">
+              Añadir Track GPX de la Quedada (Descargable por los invitados)
+            </label>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <input type="file" id="admin-input-gpx-file" accept=".gpx"
+                       class="w-full text-xs text-gray-400 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-[#252c3c] file:text-yellow-400 hover:file:bg-yellow-400 hover:file:text-black cursor-pointer">
+                <p id="admin-label-gpx-name" class="text-[10px] text-gray-400 mt-1">Ningún archivo nuevo seleccionado</p>
+              </div>
+              <div>
+                <input type="text" id="admin-input-gpx-url" 
+                       placeholder="O introduce URL del archivo .gpx"
+                       class="w-full bg-[#1e2432] border border-[#2d374d] rounded-lg px-3 py-2 text-white text-xs focus:outline-none focus:border-yellow-400">
+                <input type="hidden" id="admin-input-gpx-nombre" value="Ruta_Os_Pelinhas.gpx">
+              </div>
+            </div>
+          </div>
+
+          <!-- DATOS OPCIONALES SEGÚN EL TIPO DE QUEDADA -->
+          <div class="border-t border-gray-800 pt-4">
+            <h4 class="font-racing text-sm font-bold text-yellow-400 mb-3">CAMPOS Y CONDICIONES OPCIONALES</h4>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
+              <!-- Cuota de Inscripción -->
+              <div>
+                <label for="admin-input-cuota" class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-1">
+                  Cuota de Inscripción (€) (0 = Gratuita)
+                </label>
+                <input type="number" step="0.5" id="admin-input-cuota" 
+                       placeholder="0"
+                       class="w-full bg-[#1e2432] border border-[#2d374d] rounded-lg px-3 py-2 text-white text-sm font-bold focus:outline-none focus:border-yellow-400">
+              </div>
+
+              <!-- Teléfono Bizum Club -->
+              <div>
+                <label for="admin-input-bizum" class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-1">
+                  Teléfono Bizum Club (xxxx)
+                </label>
+                <input type="text" id="admin-input-bizum" 
+                       placeholder="612 34 56 78"
+                       class="w-full bg-[#1e2432] border border-[#2d374d] rounded-lg px-3 py-2 text-white text-sm font-mono focus:outline-none focus:border-yellow-400">
+              </div>
+
+              <!-- Cuenta Corriente IBAN -->
+              <div>
+                <label for="admin-input-iban" class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-1">
+                  Cuenta Corriente (IBAN)
+                </label>
+                <input type="text" id="admin-input-iban" 
+                       placeholder="ES91 2100 0418 4502 0005 1332"
+                       class="w-full bg-[#1e2432] border border-[#2d374d] rounded-lg px-3 py-2 text-white text-xs font-mono focus:outline-none focus:border-yellow-400">
+              </div>
+            </div>
+
+            <!-- Toggles: Comida, Camiseta, Aforo -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 p-4 rounded-xl bg-[#1b202c]">
+              
+              <!-- Comida -->
+              <div class="flex items-center gap-3">
+                <input type="checkbox" id="admin-check-comida" class="w-5 h-5 text-yellow-400 rounded bg-gray-800">
+                <div>
+                  <label for="admin-check-comida" class="text-xs font-bold text-white uppercase block">Habilitar Comida</label>
+                  <span class="text-[10px] text-gray-400">Activa el check de intolerancias y observaciones libres.</span>
+                </div>
+              </div>
+
+              <!-- Camiseta -->
+              <div class="flex items-center gap-3">
+                <input type="checkbox" id="admin-check-camiseta" class="w-5 h-5 text-yellow-400 rounded bg-gray-800">
+                <div>
+                  <label for="admin-check-camiseta" class="text-xs font-bold text-white uppercase block">Habilitar Camiseta</label>
+                  <span class="text-[10px] text-gray-400">Desplegable XS a XXXL para los participantes.</span>
+                </div>
+              </div>
+
+              <!-- Límite de Plazas (50 Máximo) -->
+              <div>
+                <label for="admin-input-aforo" class="block text-xs font-bold text-gray-300 uppercase mb-1">
+                  Máximo de Plazas (Aforo)
+                </label>
+                <input type="number" id="admin-input-aforo" value="50" min="1" max="500"
+                       class="w-full bg-[#12151e] border border-[#2d374d] rounded-lg px-3 py-1.5 text-white text-sm font-bold focus:outline-none focus:border-yellow-400">
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- Botón Guardar Cambios -->
+          <div class="pt-4 flex justify-end">
+            <button type="submit" 
+                    class="btn-apuntate py-3 px-8 rounded-xl font-bold text-base flex items-center gap-2">
+              <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+              </svg>
+              <span>GUARDAR Y PUBLICAR QUEDADA</span>
+            </button>
+          </div>
+
+        </form>
+      </div>
+
+      <!-- =====================================================================
+           PESTAÑA 2: APARTADO DE INSCRITOS
+           ===================================================================== -->
+      <div id="tab-inscritos" class="admin-tab-content hidden space-y-6">
+        
+        <!-- Tarjetas de Métricas de Inscritos -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 no-print">
+          
+          <div class="stat-card">
+            <p class="text-xs text-gray-400 font-semibold uppercase">Inscritos Actuales</p>
+            <p id="admin-stat-ocupadas" class="font-racing text-2xl font-black text-yellow-400 mt-1">0 / 50</p>
+          </div>
+
+          <div class="stat-card">
+            <p class="text-xs text-gray-400 font-semibold uppercase">Plazas Libres</p>
+            <p id="admin-stat-libres" class="font-racing text-2xl font-black text-emerald-400 mt-1">50</p>
+          </div>
+
+          <div class="stat-card">
+            <p class="text-xs text-gray-400 font-semibold uppercase">Comensales</p>
+            <p id="admin-stat-comida" class="font-racing text-2xl font-black text-white mt-1">0</p>
+          </div>
+
+          <div class="stat-card">
+            <p class="text-xs text-gray-400 font-semibold uppercase">Recaudado (Pagados)</p>
+            <p id="admin-stat-recaudado" class="font-racing text-2xl font-black text-amber-300 mt-1">0.00 €</p>
+          </div>
+
+        </div>
+
+        <!-- Barra de Herramientas de la Tabla -->
+        <div class="bg-[#151923] border border-[#242c3d] rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3 no-print">
+          
+          <!-- Buscador en tiempo real -->
+          <div class="w-full sm:w-72 relative">
+            <input type="text" id="admin-search-inscritos" placeholder="Buscar por nombre, teléfono, dorsal..."
+                   class="w-full bg-[#1e2432] border border-[#2d374d] rounded-lg pl-9 pr-3 py-2 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-yellow-400">
+            <svg class="w-4 h-4 text-gray-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+          </div>
+
+          <!-- Filtro de pago y botones de acción -->
+          <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto justify-end">
+            
+            <select id="admin-filter-pago" 
+                    class="bg-[#1e2432] border border-[#2d374d] rounded-lg px-2.5 py-2 text-xs text-white focus:outline-none focus:border-yellow-400">
+              <option value="todos">Todos los estados</option>
+              <option value="pagado">Solo Pagados</option>
+              <option value="pendiente">Solo Pendientes</option>
+            </select>
+
+            <button id="btn-export-csv" 
+                    title="Descargar listado en formato Excel / CSV"
+                    class="px-3 py-2 rounded-lg text-xs font-bold bg-[#1e2432] hover:bg-yellow-400 hover:text-black text-yellow-400 border border-yellow-400/40 transition-colors inline-flex items-center gap-1.5">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+              </svg>
+              <span>Exportar Excel / CSV</span>
+            </button>
+
+            <button id="btn-print-table" 
+                    title="Imprimir lista para el día de la ruta"
+                    class="px-3 py-2 rounded-lg text-xs font-bold bg-[#1e2432] hover:bg-[#283144] text-gray-200 border border-gray-700 transition-colors inline-flex items-center gap-1.5">
+              <svg class="w-4 h-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
+              </svg>
+              <span>Imprimir</span>
+            </button>
+
+            <button id="btn-add-manual-inscrito" 
+                    class="px-3 py-2 rounded-lg text-xs font-bold bg-yellow-400 hover:bg-yellow-300 text-black transition-colors inline-flex items-center gap-1.5">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+              </svg>
+              <span>Añadir Manual</span>
+            </button>
+
+          </div>
+
+        </div>
+
+        <!-- Cabecera de impresión exclusiva -->
+        <div class="print-only-header hidden">
+          <h1 class="text-xl font-bold">OS PELINHAS MTB & ROAD - LISTA OFICIAL DE ASISTENTES</h1>
+          <p class="text-sm">Club Ciclista Olivenza • Fecha de impresión: <span id="print-date"></span></p>
+        </div>
+
+        <!-- Tabla Completa de Inscritos -->
+        <div class="bg-[#151923] border border-[#242c3d] rounded-2xl overflow-hidden shadow-lg">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm">
+              <thead class="bg-[#10131c] text-xs font-bold text-gray-400 uppercase tracking-wider border-b border-gray-800">
+                <tr>
+                  <th class="py-3.5 px-4 text-yellow-400">Dorsal</th>
+                  <th class="py-3.5 px-4">Participante</th>
+                  <th class="py-3.5 px-4">Contacto</th>
+                  <th class="py-3.5 px-4 text-center">Talla</th>
+                  <th class="py-3.5 px-4">Comida / Alergias</th>
+                  <th class="py-3.5 px-4">Fecha</th>
+                  <th class="py-3.5 px-4 text-center">Pago</th>
+                  <th class="py-3.5 px-4 text-right no-print">Acción</th>
+                </tr>
+              </thead>
+              <tbody id="admin-tbody-inscritos" class="divide-y divide-gray-800">
+                <!-- Rellenado dinámicamente -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- =====================================================================
+           PESTAÑA 3: CONFIGURACIÓN Y CORREOS AUTOMÁTICOS
+           ===================================================================== -->
+      <div id="tab-configuracion" class="admin-tab-content hidden space-y-6">
+        
+        <div class="bg-[#151923] border border-[#242c3d] rounded-2xl p-6">
+          <div class="border-b border-gray-800 pb-3 mb-5">
+            <h3 class="font-racing text-lg font-bold text-yellow-400">ENVÍO AUTOMÁTICO DE CORREOS</h3>
+            <p class="text-xs text-gray-400 leading-relaxed mt-1">
+              Para que cada participante reciba su correo de confirmación y tú recibas el aviso en tu bandeja,
+              hemos preparado el script listo para Google Apps Script. 100% gratuito y sin servidores de pago.
+            </p>
+          </div>
+
+          <form id="form-admin-settings" class="space-y-4">
+            
+            <!-- Webhook Google Apps Script -->
+            <div>
+              <label for="settings-input-webhook" class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-1">
+                URL del Webhook de Google Apps Script (Aplicación Web)
+              </label>
+              <input type="url" id="settings-input-webhook" 
+                     placeholder="https://script.google.com/macros/s/AKfycb.../exec"
+                     class="w-full bg-[#1e2432] border border-[#2d374d] rounded-lg px-3.5 py-2.5 text-white text-xs font-mono focus:outline-none focus:border-yellow-400">
+              <p class="text-[11px] text-gray-400 mt-1">
+                Consulta el archivo <code class="text-yellow-400 font-mono">backend/GoogleAppsScript.js</code> para desplegarlo en 2 minutos desde soportepelinhas@gmail.com.
+              </p>
+            </div>
+
+            <!-- Botón Probar Conexión -->
+            <div>
+              <button type="button" id="btn-test-email" 
+                      class="px-4 py-2 rounded-lg text-xs font-bold bg-[#1e2432] hover:bg-yellow-400 hover:text-black text-yellow-400 border border-yellow-400/40 transition-colors">
+                Probar Conexión de Correo
+              </button>
+            </div>
+
+            <!-- Correos del Club -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-3 border-t border-gray-800">
+              <div>
+                <label for="settings-input-support-email" class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-1">
+                  Correo Remitente del Club
+                </label>
+                <input type="email" id="settings-input-support-email" value="soportepelinhas@gmail.com"
+                       class="w-full bg-[#1e2432] border border-[#2d374d] rounded-lg px-3.5 py-2 text-white text-xs focus:outline-none focus:border-yellow-400">
+              </div>
+
+              <div>
+                <label for="settings-input-admin-email" class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-1">
+                  Correo del Administrador (Antonio)
+                </label>
+                <input type="email" id="settings-input-admin-email" value="lopezsanchez.antonio@gmail.com"
+                       class="w-full bg-[#1e2432] border border-[#2d374d] rounded-lg px-3.5 py-2 text-white text-xs focus:outline-none focus:border-yellow-400">
+              </div>
+            </div>
+
+            <!-- Datos Bancarios y Bizum por Defecto -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-3 border-t border-gray-800">
+              <div>
+                <label for="settings-input-bizum-def" class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-1">
+                  Teléfono Bizum Oficial
+                </label>
+                <input type="text" id="settings-input-bizum-def" value="612 34 56 78"
+                       class="w-full bg-[#1e2432] border border-[#2d374d] rounded-lg px-3.5 py-2 text-white text-xs font-mono focus:outline-none focus:border-yellow-400">
+              </div>
+
+              <div>
+                <label for="settings-input-iban-def" class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-1">
+                  Cuenta Corriente Oficial (IBAN)
+                </label>
+                <input type="text" id="settings-input-iban-def" value="ES91 2100 0418 4502 0005 1332"
+                       class="w-full bg-[#1e2432] border border-[#2d374d] rounded-lg px-3.5 py-2 text-white text-xs font-mono focus:outline-none focus:border-yellow-400">
+              </div>
+            </div>
+
+            <!-- Cambiar PIN del Administrador -->
+            <div class="pt-3 border-t border-gray-800">
+              <label for="settings-input-pin" class="block text-xs font-bold text-amber-300 uppercase tracking-wider mb-1">
+                Clave / PIN de Acceso al Panel de Administrador
+              </label>
+              <input type="text" id="settings-input-pin" value="pelinhas2024"
+                     class="w-full sm:w-64 bg-[#1e2432] border border-amber-500/40 rounded-lg px-3.5 py-2 text-white text-xs font-mono focus:outline-none focus:border-yellow-400">
+              <p class="text-[11px] text-gray-400 mt-1">Guarda bien esta clave para poder entrar en el panel.</p>
+            </div>
+
+            <!-- Guardar Configuración -->
+            <div class="pt-4 flex items-center justify-between">
+              <button type="button" id="btn-reset-demo-data"
+                      class="text-xs text-gray-400 hover:text-red-400 underline">
+                Restablecer datos iniciales de demo (Sierra de Alor)
+              </button>
+
+              <button type="submit" 
+                      class="px-6 py-2.5 rounded-lg text-xs font-bold bg-yellow-400 hover:bg-yellow-300 text-black transition-colors font-racing">
+                Guardar Configuración
+              </button>
+            </div>
+
+          </form>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       MODAL: AÑADIR INSCRITO MANUALMENTE (POR ANTONIO)
+       ========================================================================= -->
+  <div id="modal-manual-inscrito" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop hidden">
+    <div class="bg-[#151923] border border-yellow-400/40 rounded-2xl w-full max-w-lg p-6 shadow-2xl relative">
+      <button id="btn-cerrar-manual-modal" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+
+      <h3 class="font-racing text-lg font-bold text-white uppercase mb-4">Añadir Inscrito Manualmente</h3>
+
+      <form id="form-manual-inscrito" class="space-y-3">
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-[11px] font-bold text-gray-300 uppercase mb-1">Nombre</label>
+            <input type="text" id="manual-input-nombre" required class="w-full bg-[#1e2432] border border-[#2d374d] rounded px-3 py-1.5 text-xs text-white">
+          </div>
+          <div>
+            <label class="block text-[11px] font-bold text-gray-300 uppercase mb-1">Apellidos</label>
+            <input type="text" id="manual-input-apellidos" required class="w-full bg-[#1e2432] border border-[#2d374d] rounded px-3 py-1.5 text-xs text-white">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-[11px] font-bold text-gray-300 uppercase mb-1">Teléfono</label>
+            <input type="tel" id="manual-input-telefono" required class="w-full bg-[#1e2432] border border-[#2d374d] rounded px-3 py-1.5 text-xs text-white">
+          </div>
+          <div>
+            <label class="block text-[11px] font-bold text-gray-300 uppercase mb-1">Email</label>
+            <input type="email" id="manual-input-email" required class="w-full bg-[#1e2432] border border-[#2d374d] rounded px-3 py-1.5 text-xs text-white">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-[11px] font-bold text-gray-300 uppercase mb-1">Talla Camiseta</label>
+            <select id="manual-input-talla" class="w-full bg-[#1e2432] border border-[#2d374d] rounded px-3 py-1.5 text-xs text-white">
+              <option value="">Sin camiseta</option>
+              <option value="XS">XS</option>
+              <option value="S">S</option>
+              <option value="M">M</option>
+              <option value="L" selected>L</option>
+              <option value="XL">XL</option>
+              <option value="XXL">XXL</option>
+              <option value="XXXL">XXXL</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-[11px] font-bold text-gray-300 uppercase mb-1">Método Pago</label>
+            <select id="manual-select-pago" class="w-full bg-[#1e2432] border border-[#2d374d] rounded px-3 py-1.5 text-xs text-white">
+              <option value="BIZUM">BIZUM</option>
+              <option value="TRANSFERENCIA">Transferencia</option>
+              <option value="EFECTIVO">En mano / Efectivo</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-4 pt-1">
+          <label class="inline-flex items-center gap-1.5 text-xs text-white">
+            <input type="checkbox" id="manual-check-comida" checked class="w-4 h-4 text-yellow-400">
+            <span>Comida</span>
+          </label>
+          <label class="inline-flex items-center gap-1.5 text-xs text-emerald-400 font-bold">
+            <input type="checkbox" id="manual-check-pagado" checked class="w-4 h-4 text-emerald-400">
+            <span>Marcar ya como Pagado</span>
+          </label>
+        </div>
+
+        <div>
+          <label class="block text-[11px] font-bold text-gray-300 uppercase mb-1">Intolerancias / Observaciones</label>
+          <input type="text" id="manual-input-intolerancias" placeholder="Ninguna" class="w-full bg-[#1e2432] border border-[#2d374d] rounded px-3 py-1.5 text-xs text-white">
+        </div>
+
+        <div class="pt-2">
+          <button type="submit" class="w-full py-2 rounded bg-yellow-400 hover:bg-yellow-300 text-black font-bold text-xs font-racing">
+            GUARDAR INSCRITO
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       PIE DE PÁGINA (FOOTER)
+       ========================================================================= -->
+  <footer class="mt-auto border-t border-[#1e2432] bg-[#090b0e] py-6 text-center text-xs text-gray-500 no-print">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div class="flex items-center gap-2">
+        <img src="assets/logo.png" alt="Os Pelinhas Logo" class="w-6 h-6 object-contain">
+        <span class="font-racing font-bold text-gray-300 tracking-wider">CLUB CICLISTA OS PELINHAS M.T.B. OLIVENZA</span>
+      </div>
+      <div>
+        <span>20º Aniversario (2007 - 2027) • </span>
+        <a href="mailto:soportepelinhas@gmail.com" class="text-yellow-400 hover:underline">soportepelinhas@gmail.com</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts de la Aplicación -->
+  <script src="js/data.js"></script>
+  <script src="js/email-service.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
